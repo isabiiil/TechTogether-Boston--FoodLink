@@ -32,13 +32,13 @@ def home():
 @app.route("/login", methods=["POST"])
 def login():
 	m = request.get_json()
-	out = {}
-	return json.dumps(out)
+	return json.dumps(m)
 
 @app.route("/debug", methods=["GET"])
 def debug():
+	z = requests.post("http://localhost:5000/login", json={"HELLO":"DIE"})
 	User(username="mood").save()
-	return "h"
+	return json.dumps(z.json())
 
 
 
