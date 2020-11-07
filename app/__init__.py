@@ -2,13 +2,19 @@ from flask import *
 import json
 import importlib
 import requests
-from os import environ
+from os import environ, urandom
 from .util.dbctrl import *
 from .util.decorators import *
-
+import hashlib
 
 app = Flask(__name__)
 app.secret_key = "HELLO"
+
+
+def hashcalc(password, salt):
+	return hashlib.sha512(
+            (password + salt).encode("utf-8")).digest().hex()
+
 
 @app.route("/", methods=["GET"])
 @login_required
@@ -29,14 +35,15 @@ def logout():
 def login():
 	if request.method == "POST":
 		m = User.objects(username=request.form["username"])
-		if m and m[0].password == request.form["password"]:
+		if m and m[0].password == hashcalc(request.form["password"], m[0].salt):
 			session["user"] = m[0].username
 			return redirect(url_for("home"))
 		else:
-
+			flash("wrong credentials")
 			pass
 	m = request.get_json()
 	return render_template("login.html")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -46,18 +53,17 @@ def register():
 		if request.method == "POST":
 			if request.form["password0"] == request.form["password1"]:
 				uname = request.form["username"]
-
 				if User.objects(username=uname):
 					flash("username already exists")
 					return redirect(url_for("register"))
 				
 				else:
-					User(username=uname, password=request.form["password0"]).save()
+					salt = urandom(64).hex()
+					User(username=uname, salt=salt, password=hashcalc(request.form["password0"], salt)).save()
 					session["user"] = uname
 					return redirect(url_for("home"))
 					pass
 				pass
-
 			else:
 				flash("passwords dont match")
 				return redirect(url_for("home"))
