@@ -16,7 +16,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-api":"python3 api/__init__.py"
+    "start-api": "python3 api/__init__.py"
   },
   "eslintConfig": {
     "extends": [
