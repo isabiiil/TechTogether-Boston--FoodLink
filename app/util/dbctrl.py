@@ -7,6 +7,7 @@ mg.connect("pantry", host=environ["atlasurl"])
 class User(mg.Document):
 	username = mg.StringField()
 	password = mg.StringField()
+	salt = mg.StringField()
 	organization = mg.StringField()
 	location = mg.StringField()
 	type = mg.StringField()
