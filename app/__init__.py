@@ -28,6 +28,7 @@ def home():
 def logout():
 	if "user" in session:
 		session.pop("user")
+	flash("logged out")
 	return redirect(url_for("login"))
 	pass
 
