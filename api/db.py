@@ -9,7 +9,7 @@ class User(mg.Document):
 	organization = mg.StringField()
 	location = mg.StringField()
 	type = mg.StringField()
-	posts = mg.ListField(mg.ReferenceField(Post))
+	posts = mg.ListField(mg.ReferenceField("Post"))
 
 class Post(mg.Document):
 	type = mg.StringField()
