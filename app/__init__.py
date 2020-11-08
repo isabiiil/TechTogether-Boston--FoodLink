@@ -23,7 +23,7 @@ def home():
 	if "user" in session:
 		m = User.objects(username=session["user"])
 		pdata = Post.objects()
-		return render_template("home.html", user = m[0], pdata = pdata)
+		return render_template("home.html", user=m[0], pdata=pdata, posts=Post.objects())
 	return redirect(url_for("login"))
 
 @app.route("/logout", methods=["get"])
@@ -92,32 +92,29 @@ def newpost():
 			category = request.form["category"]
 
 			if type == "Announcement":
-				post = Post(ptype="orgo", title="Announcement", content=message, timestamp = time).save()
+				post = Post(ptype="orgo", title="Announcement", content=message, timestamp = time, owner=session["user"]).save()
 				u = User.objects(username=session["user"])[0]
-				print(u.posts)
 				u.posts.append(post)
 				u.save()
 			else:
-				post = Post(ptype="orgo", title=announcement+" " + acknowledge, content = message, timestamp = time).save()
+				post = Post(ptype="orgo", title=announcement+" " + acknowledge, content = message, timestamp = time, owner=session["user"]).save()
 				User.objects(username=session["user"])[0]
 				u = User.objects(username=session["user"])[0]
 				print(u.posts)
 				u.posts.append(post)
 				u.save()
-			
-
-			return "orgo post being made..."
+			return redirect(url_for("home"))
+		
 		else:
 			message = request.form["message"]
 			type = request.form["post-type"]
 			subject = request.form["appreciation"]
 			title = "Appreciation: " + subject
-			post = Post(ptype="user", content = message, title = title, timestamp = time).save()
-			return "user post being made..."
-		pass
+			post = Post(ptype="user", content = message, title = title, timestamp = time, owner=session["user"]).save()
+			return redirect(url_for("home"))
 	udata = User.objects()
 	user = [x for x in udata if x.username==session["user"]]
-	return render_template("post.html", udata = udata, user=user[0], posts=Post.objects())
+	return render_template("post.html", udata = udata, user=user[0], posts=Post.objects(owner=session["user"]))
 
 @app.route("/debug", methods=["GET"])
 def debug():
