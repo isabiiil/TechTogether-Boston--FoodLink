@@ -55,12 +55,19 @@ body {
   width: 100%;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 label, input {
   margin: 2vh 1vw;
   display: block;
 }
 
-p, label, input, select, option {
+p, label, input, select, option, button {
   font-family: 'Montserrat';
 }
 
@@ -70,4 +77,8 @@ h1, h2, h3, h4, h5, h6 {
 
 h3 {
   line-height: 0rem;
+}
+
+a {
+  text-decoration: none;
 }
