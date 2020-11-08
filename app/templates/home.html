@@ -27,30 +27,21 @@
 		<div class="col" id="feed">
 			<h3>{{user.username}}'s Community</h3>
 			<p><small>Date</small></p>
+			
+			{% for x in posts %}
 			<div class="post">
 				<div id="post-top">
-					<img src="https://source.unsplash.com/random/500x500" id="photo">
-					<p id="right">Name<br />Time</p>
+					<p>
+						{{x.owner}}
+					</p>
+					<!-- <img src="https://source.unsplash.com/random/500x500" id="photo"> -->
+					<p id="right">{{x.title}}<br />{{x.timestamp}}</p>
 				</div>
-				<p>post-post-post-post-post-post post-post-post-post-post-post post-post-post-post-post-post </p>
+				<p>{{x.content}} </p>
 				<div id="separator"></div>
 			</div>
-			<div class="post">
-				<div id="post-top">
-					<img src="https://source.unsplash.com/random/500x500" id="photo">
-					<p id="right">Name<br />Time</p>
-				</div>
-				<p>post-post-post-post-post-post post-post-post-post-post-post post-post-post-post-post-post </p>
-				<div id="separator"></div>
-			</div>
-			<div class="post">
-				<div id="post-top">
-					<img src="https://source.unsplash.com/random/500x500" id="photo">
-					<p id="right">Name<br />Time</p>
-				</div>
-				<p>post-post-post-post-post-post post-post-post-post-post-post post-post-post-post-post-post </p>
-				<div id="separator"></div>
-			</div>
+			{% endfor %}
+
 		</div>
 		<!-- Welcome {{user}}! <br>
 		<br>

@@ -1,123 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create a Post</title>
-    <link rel="stylesheet" type="text/css" href="../static/styles.css">
-  </head>
-  <body>
-    <div class="col" id="navbar">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Create a Post</title>
+	<link rel="stylesheet" type="text/css" href="../static/styles.css">
+</head>
+
+<body>
+	<div class="col" id="navbar">
 		<h2>{{user.utype}}</h2>
-			<h1>FoodLink</h1>
-			<h4><a href="{{url_for('home')}}">Map</a></h4>
-			<h4>Stock</h4>
-			<h2>Create Post</h2>
-			<h4>Your Location</h4>
-			<h4>Settings</h4>
-			<a href="/logout"><h4>Logout</h4></a>
-			<br /><br /><br />
-			<p><small>Log in as pantry location</small></p>
-    </div>
-    <div class="col" id="create-post">
-      <form action="{{url_for('newpost')}}" method="post">
-        		<label>
-					What type of post is this?
-					<select id="post-type" name="post-type">
-						{% if user.utype=="orgo" %}
-							<option>Announcement</option>
-							<option>Donation</option>
-						{% else %}
-							<option>Appreciation</option>
-						{% endif %}
-					</select>
-				</label>
-				
-				{% if user.utype=="orgo" %}
-				<!-- If Announcement: (by business) -->
-				<label>
-					What kind of announcement do you need to make?
-					<select id="announcement" name="announcement">
-						<option>Perishables</option>
-						<option>Donation Acknowledgement</option>
-						<option>Other</option>
-					</select>
-				</label>
+		<h1>FoodLink</h1>
+		<h4><a href="{{url_for('home')}}">Map</a></h4>
+		<h4>Stock</h4>
+		<h2>Create Post</h2>
+		<h4>Your Location</h4>
+		<h4>Settings</h4>
+		<a href="/logout">
+			<h4>Logout</h4>
+		</a>
+		<br /><br /><br />
+		<p><small>Log in as pantry location</small></p>
+	</div>
+	<div class="col" id="create-post">
+		<form action="{{url_for('newpost')}}" method="post">
+			<label>
+				What type of post is this?
+				<select id="post-type" name="post-type">
+					{% if user.utype=="orgo" %}
+					<option>Announcement</option>
+					<option>Donation</option>
+					{% else %}
+					<option>Appreciation</option>
+					{% endif %}
+				</select>
+			</label>
 
-				<!-- If Donation: (by business) -->
-				<!-- This part can double as the stock (inventory) feature -->
-				<label>
-					Which user would you like to acknowledge?
-					<select id="acknowledge" name="acknowledge">
-						{% for x in udata %}
-							{% if x.utype == "user" %}
-								<option>{{x.username}}</option>
-							{% endif %}
-						{% endfor %}
-					</select>
-				</label>
-				<label>
-					What category was their donation?
-					<select id="category" name="category">
-						<option>Pasta (canned or dry) and pasta sauces</option>
-						<option>Canned and frozen meats and fish</option>
-						<option>Whole grain cereal</option>
-					</select>
-				</label>
+			{% if user.utype=="orgo" %}
+			<!-- If Announcement: (by business) -->
+			<label>
+				What kind of announcement do you need to make?
+				<select id="announcement" name="announcement">
+					<option>Perishables</option>
+					<option>Donation Acknowledgement</option>
+					<option>Other</option>
+				</select>
+			</label>
 
-				{% else %}
+			<!-- If Donation: (by business) -->
+			<!-- This part can double as the stock (inventory) feature -->
+			<label>
+				Which user would you like to acknowledge?
+				<select id="acknowledge" name="acknowledge">
+					{% for x in udata %}
+					{% if x.utype == "user" %}
+					<option>{{x.username}}</option>
+					{% endif %}
+					{% endfor %}
+				</select>
+			</label>
+			<label>
+				What category was their donation?
+				<select id="category" name="category">
+					<option>Pasta (canned or dry) and pasta sauces</option>
+					<option>Canned and frozen meats and fish</option>
+					<option>Whole grain cereal</option>
+				</select>
+			</label>
 
-				<!-- If Appreciation: (by user) -->
-				<label>
-					Which organization would you like to thank?
-					<select id="appreciation" name="appreciation">
-						{% for x in udata %}
-							{% if x.utype == "orgo" %}
-							<option>{{x.username}}</option>
-							{% endif %}
-						{% endfor %}
-					</select>
-				</label>
+			{% else %}
 
-				{% endif %}
+			<!-- If Appreciation: (by user) -->
+			<label>
+				Which organization would you like to thank?
+				<select id="appreciation" name="appreciation">
+					{% for x in udata %}
+					{% if x.utype == "orgo" %}
+					<option>{{x.username}}</option>
+					{% endif %}
+					{% endfor %}
+				</select>
+			</label>
+
+			{% endif %}
 
 
-				<!-- General -->
-				<label>
-					Message:
-					<textarea id="message" name="message" rows="6" cols="50"></textarea>
-				</label>
+			<!-- General -->
+			<label>
+				Message:
+				<textarea id="message" name="message" rows="6" cols="50"></textarea>
+			</label>
 
-				<button type="submit">Submit Post</button>
-      </form>
-    </div>
-    <div class="col" id="feed">
-			<h3>Your Community</h3>
-			<p><small>Date</small></p>
-			<div class="post">
-				<div id="post-top">
-					<img src="https://source.unsplash.com/random/500x500" id="photo">
-					<p id="right">Name<br />Time</p>
-				</div>
-				<p>other-post<br />other-post<br />other-post </p>
-				<div id="separator"></div>
+			<button type="submit">Submit Post</button>
+		</form>
+	</div>
+	<div class="col" id="feed">
+		<h3>Your Community</h3>
+		<p><small>Date</small></p>
+
+		{% for x in posts %}
+		
+		<div class="post">
+			<div id="post-top">
+				<!-- <img src="https://source.unsplash.com/random/500x500" id="photo"> -->
+				<p id="right">{{x.title}}<br />{{x.timestamp}}</p>
 			</div>
-			<div class="post">
-				<div id="post-top">
-					<img src="https://source.unsplash.com/random/500x500" id="photo">
-					<p id="right">Name<br />Time</p>
-				</div>
-				<p>post-post-post-post-post-post post-post-post-post-post-post post-post-post-post-post-post </p>
-				<div id="separator"></div>
-			</div>
-			<div class="post">
-				<div id="post-top">
-					<img src="https://source.unsplash.com/random/500x500" id="photo">
-					<p id="right">Name<br />Time</p>
-				</div>
-				<p>post-post-post-post-post-post post-post-post-post-post-post post-post-post-post-post-post </p>
-				<div id="separator"></div>
-			</div>
+			<p>{{x.content}}</p>
+			<div id="separator"></div>
 		</div>
-  </body>
+		{% endfor %}
+	</div>
+</body>
+
 </html>
