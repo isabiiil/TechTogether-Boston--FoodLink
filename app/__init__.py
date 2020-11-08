@@ -42,6 +42,8 @@ def login():
 			flash("wrong credentials")
 			pass
 	m = request.get_json()
+	if "user" in session:
+		return redirect(url_for("home"))
 	return render_template("login.html")
 
 
