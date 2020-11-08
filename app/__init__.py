@@ -5,6 +5,7 @@ import requests
 from os import environ, urandom
 from .util.dbctrl import *
 from .util.decorators import *
+import datetime
 import hashlib
 
 app = Flask(__name__)
@@ -15,19 +16,21 @@ def hashcalc(password, salt):
 	return hashlib.sha512(
             (password + salt).encode("utf-8")).digest().hex()
 
-
 @app.route("/", methods=["GET"])
 @login_required
 def home():
+	print(session)
 	if "user" in session:
 		m = User.objects(username=session["user"])
-		return render_template("home.html", user = m[0].username)
+		pdata = Post.objects()
+		return render_template("home.html", user = m[0], pdata = pdata)
 	return redirect(url_for("login"))
 
 @app.route("/logout", methods=["get"])
 def logout():
 	if "user" in session:
 		session.pop("user")
+		session.pop("type")
 	flash("logged out")
 	return redirect(url_for("login"))
 	pass
@@ -38,6 +41,7 @@ def login():
 		m = User.objects(username=request.form["username"])
 		if m and m[0].password == hashcalc(request.form["password"], m[0].salt):
 			session["user"] = m[0].username
+			session["type"] = m[0].utype
 			return redirect(url_for("home"))
 		else:
 			flash("wrong credentials")
@@ -62,8 +66,9 @@ def register():
 				
 				else:
 					salt = urandom(64).hex()
-					User(username=uname, salt=salt, password=hashcalc(request.form["password0"], salt)).save()
+					User(username=uname, salt=salt, password=hashcalc(request.form["password0"], salt), utype = request.form["type"]).save()
 					session["user"] = uname
+					session["type"] = request.form["type"]
 					return redirect(url_for("home"))
 					pass
 				pass
