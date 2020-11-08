@@ -27,6 +27,50 @@
 						<option>Donation</option>
 					</select>
 				</label>
+				<!-- If Announcement: (by business) -->
+				<label>
+					What kind of announcement do you need to make?
+					<select id="announcement">
+						<option>Perishables</option>
+						<option>Donation Acknowledgement</option>
+						<option>Other</option>
+					</select>
+				</label>
+				<!-- If Appreciation: (by user) -->
+				<label>
+					Which organization would you like to thank?
+					<select id="appreciation">
+						<option>Org A</option>
+						<option>Org B</option>
+						<option>Org C</option>
+						<option>Org D</option>
+						<option>Org E</option>
+					</select>
+				</label>
+				<!-- If Donation: (by business) -->
+				<!-- This part can double as the stock (inventory) feature -->
+				<label>
+					Which user would you like to acknowledge?
+					<select id="acknowledge">
+						<option>User A</option>
+						<option>User B</option>
+						<option>User C</option>
+					</select>
+				</label>
+				<label>
+					What category was their donation?
+					<select id="category">
+						<option>Pasta (canned or dry) and pasta sauces</option>
+						<option>Canned and frozen meats and fish</option>
+						<option>Whole grain cereal</option>
+					</select>
+				</label>
+				<!-- General -->
+				<label>
+					Message:
+					<textarea id="message" rows="6" cols="50"></textarea>
+				</label>
+				<input type="submit">
       </form>
     </div>
     <div class="col" id="feed">
