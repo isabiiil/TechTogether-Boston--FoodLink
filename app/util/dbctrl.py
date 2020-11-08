@@ -10,11 +10,13 @@ class User(mg.Document):
 	salt = mg.StringField()
 	organization = mg.StringField()
 	location = mg.StringField()
-	type = mg.StringField()
+	utype = mg.StringField()
 	posts = mg.ListField(mg.ReferenceField("Post"))
 
 
 class Post(mg.Document):
-	type = mg.StringField()
+	ptype = mg.StringField()
 	timestamp = mg.DateField()
+	owner = mg.StringField()
+	title = mg.StringField()
 	content = mg.StringField()
