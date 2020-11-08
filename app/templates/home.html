@@ -16,15 +16,16 @@
 			<h1>FoodLink</h1>
 			<h2>Map</h2>
 			<h4>Stock</h4>
-			<h4><a href="post.html">Create Post</a></h4>
+			<h4><a href="{{url_for('newpost')}}">Create Post</a></h4>
 			<h4>Your Location</h4>
 			<h4>Settings</h4>
+			<a href="/logout"><h4>Logout</h4></a>
 			<br /><br /><br />
 			<p><small>Log in as pantry location</small></p>
 		</div>
 		<div class="col" id="map"></div>
 		<div class="col" id="feed">
-			<h3>Your Community</h3>
+			<h3>{{user.username}}'s Community</h3>
 			<p><small>Date</small></p>
 			<div class="post">
 				<div id="post-top">
