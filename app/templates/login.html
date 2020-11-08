@@ -4,11 +4,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="../static/styles.css">
 </head>
 <body>
 	<form action="{{url_for('login')}}" method="post">
-		<input type="text" name="username" id=""><br>
-		<input type="password" name="password" id=""><br>
+		<label>Username: <input type="text" name="username" id=""></label>
+		<label>Password: <input type="password" name="password" id=""></label>
 		<button type="submit">SUBMIT</button>
 	</form>
 	<br>
