@@ -74,6 +74,46 @@ def register():
 		return render_template("register.html")
 	pass
 
+@app.route("/post", methods=["GET", "POST"])
+def newpost():
+	if request.method == "POST":
+		print(request.form)
+		time = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+		if session["type"] == "orgo":
+			message = request.form["message"]
+			type = request.form["post-type"]
+			announcement = request.form["announcement"]
+			acknowledge = request.form["acknowledge"]
+			category = request.form["category"]
+
+			if type == "Announcement":
+				post = Post(ptype="orgo", title="Announcement", content=message, timestamp = time).save()
+				u = User.objects(username=session["user"])[0]
+				print(u.posts)
+				u.posts.append(post)
+				u.save()
+			else:
+				post = Post(ptype="orgo", title=announcement+" " + acknowledge, content = message, timestamp = time).save()
+				User.objects(username=session["user"])[0]
+				u = User.objects(username=session["user"])[0]
+				print(u.posts)
+				u.posts.append(post)
+				u.save()
+			
+
+			return "orgo post being made..."
+		else:
+			message = request.form["message"]
+			type = request.form["post-type"]
+			subject = request.form["appreciation"]
+			title = "Appreciation: " + subject
+			post = Post(ptype="user", content = message, title = title, timestamp = time).save()
+			return "user post being made..."
+		pass
+	udata = User.objects()
+	user = [x for x in udata if x.username==session["user"]]
+	return render_template("post.html", udata = udata, user=user[0], posts=Post.objects())
+
 @app.route("/debug", methods=["GET"])
 def debug():
 	z = requests.post("http://localhost:5000/login", json={"HELLO":"DIE"})
