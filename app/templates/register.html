@@ -10,6 +10,15 @@
 		<input type="text" name="username" id=""> <br>
 		<input type="password" name="password0" id=""> <br>
 		<input type="password" name="password1" id=""> <br>
+
+		<br>
+		what user type are you? <br>
+		<input type="radio" id="0" name="type" value="user">
+		<label for="male">Normal User</label><br>
+		
+		<input type="radio" id="1" name="type" value="orgo">
+		<label for="1">Orgo</label><br>
+
 		<button type="submit">SUBMIT</button>
 	</form>
 	{% with messages = get_flashed_messages() %}
